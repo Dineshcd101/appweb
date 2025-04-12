@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="video.png" type="image/png">
+    <meta name="description" content="Videos Of Dinesh">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinesh Panthi - YouTube Videos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4b89f0, #f54ea2, #ffb88c);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            height: 15%;
+        }
+        .video-card {
+            background: #fff;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(245, 245, 245, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            color: #333;
+        }
+        .video-card:hover {
+            transform: scale(1.05);
+        }
+        .thumbnail {
+            width: 100%;
+            height: auto;
+        }
+        .profile {
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .video-info {
+            padding: 10px;
+        }
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+ 
+            width: 100%;
+            background: rgba(245, 245, 245, 0);
+            height: 56.25%;
+            top:21.875%;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 900px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .modal iframe {
+            width: 100%;
+            height: 100%;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 50%;
+            background: #ff4d4d;
+            border: none;
+            color: white;
+            font-size: 18px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        /* Profile Container at the Bottom */
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(245, 245, 245, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            width: auto;
+            max-width: 1000px;
+            flex-direction: row;
+        }
+
+        .profile-container p {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: bottom;
+            max-width: relative;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: -300px;
+            background-color: #2c3e50;
+            color: white;
+            overflow-y: auto;
+            transition: 0.4s ease;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar-header {
+            padding: 20px;
+            background-color: #34495e;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid #444;
+            position: relative;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ecf0f1;
+            border-bottom: 1px solid #444;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Open and Close Buttons */
+        .open-sidebar-btn {
+            font-size: 30px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            
+            transition: 0.3s;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 50px; /* Set button width */
+            height: 40px;
+            z-index: 2000;
+        }
+        .open-sidebar-btn.hidden {
+            display: none;
+        }
+
+        .close-btn {
+            font-size: 36px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            
+            border-radius: 50%;
+           
+            transition: 0.3s;
+            position: absolute;
+            top: 15px;
+            width: 50px; /* Set button width */
+            height: 50px;
+            right: 15px;
+        }
+
+        .close-btn:hover {
+            background: transparent;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <!-- Open Button -->
+    <button class="open-sidebar-btn" id="openBtn" onclick="openSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span>Videos</span>
+            <button class="close-btn" onclick="closeSidebar()">×</button>
+        </div>
+        <a href="index.html"><i class="fas fa-home"></i>To-Do's</a>
+        <a href="converter.html"><i class="fas fa-info-circle"></i>Unit Converter</a>
+        <a href="video.html"><i class="fas fa-cogs"></i> Videos</a>
+        <a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a>
+        <a href="qrcode.html"><i class="fas fa-envelope"></i> QR-Code Generator</a>
+    </div>
+    <header>
+        <h1>Dinesh Panthi - My YouTube Videos</h1>
+        <p>Explore my latest YouTube videos, tutorials, and more!</p>
+    </header>
+
+    <div class="video-container">
+        <!-- Video Card 1 -->
+        <div class="video-card" onclick="openModal('D_KDiyVBOFQ')">
+            <img class="thumbnail" src="video1.png" alt="Video Thumbnail">
+            <div class="video-info">
+                <div class="video-title">My Science Project || Best Project 2023/2024</div>
+            </div>
+        </div>
+
+        <!-- Video Card 2 -->
+        <div class="video-card" onclick="openModal('TBh-WUdGgqo')">
+            <img class="thumbnail" src="https://img.youtube.com/vi/TBh-WUdGgqo/maxresdefault.jpg" alt="Video Thumbnail">
+            <div class="video-info">
+                <div class="video-title">How To Make Blender At Home</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-container">
+        <!-- Video Card 3 -->
+        <div class="video-card" onclick="openModal('Ifo7O_cd5Ss')">
+            <img class="thumbnail" src="https://img.youtube.com/vi/Ifo7O_cd5Ss/maxresdefault.jpg" alt="Video Thumbnail">
+            <div class="video-info">
+                <div class="video-title">How To Make Pen Which Controls Mobile</div>
+            </div>
+        </div>
+
+        <!-- Video Card 4 -->
+        <div class="video-card" onclick="openModal('GENY3ZSdomE')">
+            <img class="thumbnail" src="https://img.youtube.com/vi/GENY3ZSdomE/maxresdefault.jpg" alt="Video Thumbnail">
+            <div class="video-info">
+                <div class="video-title">My First Project Work Presentation In School</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-container">
+        <!-- Video Card 5 -->
+        <div class="video-card" onclick="openModal('B50uzhoU6jI')">
+            <img class="thumbnail" src="https://img.youtube.com/vi/B50uzhoU6jI/maxresdefault.jpg" alt="Video Thumbnail">
+            <div class="video-info">
+                <div class="video-title">I Solved A Cube In 1 Minuts & 18 Seconds</div>
+            </div>
+        </div>
+        <div class="video-card" onclick="openInNewTab('https://www.youtube.com/@creator-dinesh')" target="_blank">
+            
+
+            <img class="profile"  href="www.youtube.com/@creator-dinesh" target="_blank" src="https://yt3.ggpht.com/Spopn563M49LugQggj2EW3Ah6yE9Vg_Rc3whADfjj2N4qM9H-CV6pE4yOThzCh-YUOoPBqx1JA=s600-c-k-c0x00ffffff-no-rj-rp-mo" alt="Video Thumbnail">
+            <div class="video-info">
+                <div class="video-title">Creator Dinesh(CD)</div>
+            </div>
+        </div>
+  
+    </div>
+    
+    <!-- Profile Container at the Bottom -->
+    <div class="profile-container">
+        
+        <p>
+            Get ready to unleash your inner scientist with Creator Dinesh! <br> 
+            Our channel offers an exciting array of captivating science project videos that will fuel your curiosity and inspire you to explore the wonders of the world. <br> 
+            Join us on this thrilling journey of discovery and innovation, where science meets creativity in the most fun and engaging way possible. <br> 
+            So, hit that Subscribe button and let's start creating!
+        </p>
+    </div>
+
+    <!-- Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">X</button>
+            <iframe id="videoIframe" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Dinesh Panthi. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function openInNewTab(url) {
+            window.open(url, '_blank'); // Opens the URL in a new tab
+        }
+        // Open modal and load video
+        function openModal(videoId) {
+            var iframe = document.getElementById('videoIframe');
+            iframe.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1"; // Load the video with autoplay
+            document.getElementById('videoModal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            var iframe = document.getElementById('videoIframe');
+            iframe.src = ""; // Stop the video when closing the modal
+            document.getElementById('videoModal').style.display = 'none';
+        }
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('openBtn').classList.add('hidden'); // Hide open button
+        }
+
+        // Close Sidebar
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('openBtn').classList.remove('hidden'); // Show open button
+        }
+
+        // Show Section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active-section');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active-section');
+        }
+    </script>
+</body>
+</html>

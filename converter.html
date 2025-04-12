@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="converter.png" type="image/png">
+    <meta name="description" content="Nepal's Rular Unit Converter">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4b89f0, #f54ea2, #ffb88c);
+            margin: 0;
+            padding: 5px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background:  rgba(245, 245, 245, 0.2);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top:5px;
+        }
+        .converter-section {
+            margin-bottom: 30px;
+            border: 1px solid #e5e5e5;
+            padding: 10px;
+            border-radius: 8px;
+            background:  rgba(245, 245, 245, 0.3);
+        }
+        h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #555555;
+        }
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #555555;
+        }
+        input, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background:rgba(255, 8, 8, 0.3);
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #444444;
+            text-align: center;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: -300px;
+            background-color: #2c3e50;
+            color: white;
+            overflow-y: auto;
+            transition: 0.4s ease;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar-header {
+            padding: 20px;
+            background-color: #34495e;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid #444;
+            position: relative;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ecf0f1;
+            border-bottom: 1px solid #444;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Open and Close Buttons */
+        .open-sidebar-btn {
+            font-size: 30px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            
+            transition: 0.3s;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 50px; /* Set button width */
+            height: 40px;
+            z-index: 2000;
+        }
+
+        .open-sidebar-btn:hover {
+            background: transparent;
+        }
+        .open-sidebar-btn.hidden {
+            display: none;
+        }
+
+        .close-btn {
+            font-size: 36px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            
+            border-radius: 50%;
+           
+            transition: 0.3s;
+            position: absolute;
+            top: 10px;
+            width: 50px; /* Set button width */
+            height: 50px;
+            right: 15px;
+        }
+
+        .close-btn:hover {
+            background: transparent;
+            transform: scale(1.1);
+        }
+        footer {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <!-- Open Button -->
+    <button class="open-sidebar-btn" id="openBtn" onclick="openSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span>Unit Converter</span>
+            <button class="close-btn" onclick="closeSidebar()">×</button>
+        </div>
+        <a href="index.html"><i class="fas fa-home"></i>To-Do's</a>
+        <a href="converter.html"><i class="fas fa-info-circle"></i>Unit Converter</a>
+        <a href="video.html"><i class="fas fa-cogs"></i> Videos</a>
+        <a href="portfolio.html"><i class="fas fa-briefcase"></i> Portfolio</a>
+        <a href="qrcode.html"><i class="fas fa-envelope"></i> QR-Code Generator</a>
+    </div>
+    <div class="container">
+        <h2>Unit Converter</h2>
+
+        <!-- Length Converter Section -->
+        <div class="converter-section">
+            <h3>Length Converter</h3>
+            <label for="lengthInput">Enter Length:</label>
+            <input type="number" id="lengthInput" placeholder="Enter a value">
+            
+            <label for="lengthFrom">From Unit:</label>
+            <select id="lengthFrom">
+                <option value="meter">Meters</option>
+                <option value="kilometer">Kilometers</option>
+                <option value="centimeter">Centimeters</option>
+                <option value="inch">Inches</option>
+                <option value="foot">Feet</option>
+                <option value="haat">Haat</option>
+            </select>
+
+            <label for="lengthTo">To Unit:</label>
+            <select id="lengthTo">
+                <option value="meter">Meters</option>
+                <option value="kilometer">Kilometers</option>
+                <option value="centimeter">Centimeters</option>
+                <option value="inch">Inches</option>
+                <option value="foot">Feet</option>
+                <option value="haat">Haat</option>
+            </select>
+
+            <button onclick="convertLength()">Convert</button>
+            <div class="result" id="lengthResult"></div>
+        </div>
+
+        <!-- Area Converter Section -->
+        <div class="converter-section">
+            <h3>Area Converter</h3>
+            <label for="areaInput">Enter Area:</label>
+            <input type="number" id="areaInput" placeholder="Enter a value">
+
+            <label for="areaFrom">From Unit:</label>
+            <select id="areaFrom">
+                <option value="square_meter">Square Meters</option>
+                <option value="square_kilometer">Square Kilometers</option>
+                <option value="acre">Acres</option>
+                <option value="hectare">Hectares</option>
+                <option value="ropani">Ropani</option>
+                <option value="aana">Aana</option>
+                <option value="paisa">Paisa</option>
+                <option value="daam">Daam</option>
+                <option value="dhur">Dhur</option>
+                <option value="murimato">Muri Mato</option>
+                <option value="kattha">Kattha</option>
+                <option value="bigha">Bigha</option>
+                <option value="square_foot">Square Feet</option>
+            </select>
+
+            <label for="areaTo">To Unit:</label>
+            <select id="areaTo">
+                <option value="square_meter">Square Meters</option>
+                <option value="square_kilometer">Square Kilometers</option>
+                <option value="acre">Acres</option>
+                <option value="hectare">Hectares</option>
+                <option value="ropani">Ropani</option>
+                <option value="aana">Aana</option>
+                <option value="paisa">Paisa</option>
+                <option value="daam">Daam</option>
+                <option value="dhur">Dhur</option>
+                <option value="murimato">Muri Mato</option>
+                <option value="kattha">Kattha</option>
+                <option value="bigha">Bigha</option>
+                <option value="square_foot">Square Feet</option>
+            </select>
+
+            <button onclick="convertArea()">Convert</button>
+            <div class="result" id="areaResult"></div>
+        </div>
+
+        <!-- Volume Converter Section -->
+        <div class="converter-section">
+            <h3>Volume Converter</h3>
+            <label for="volumeInput">Enter Volume:</label>
+            <input type="number" id="volumeInput" placeholder="Enter a value">
+
+            <label for="volumeFrom">From Unit:</label>
+            <select id="volumeFrom">
+                <option value="liter">Liters</option>
+                <option value="gallon">Gallons</option>
+                 <option value="gallon">Gallons</option>
+                 
+                <option value="cubic_meter">Cubic Meters</option>
+                <option value="mana">Mana</option>
+                <option value="pathi">Pathi</option>
+                <option value="kg">Kilo</option>
+                <option value="kuruwa">Kuruwa</option>
+                <option value="muthi">Muthi</option>
+                <option value="milliliter">Milliliters</option>
+            </select>
+
+            <label for="volumeTo">To Unit:</label>
+            <select id="volumeTo">
+                <option value="liter">Liters</option>
+                <option value="gallon">Gallons</option>
+                <option value="cubic_meter">Cubic Meters</option>
+                <option value="mana">Mana</option>
+                <option value="pathi">Pathi</option>
+                <option value="kuruwa">Kuruwa</option>
+                <option value="muthi">Muthi</option>
+                <option value="kg">Kilo</option>
+                <option value="milliliter">Milliliters</option>
+            </select>
+
+            <button onclick="convertVolume()">Convert</button>
+            <div class="result" id="volumeResult"></div>
+        </div>
+    </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Dinesh Panthi. All Rights Reserved.
+    </footer>
+    <script>
+        function convertLength() {
+            const value = parseFloat(document.getElementById('lengthInput').value);
+            const fromUnit = document.getElementById('lengthFrom').value;
+            const toUnit = document.getElementById('lengthTo').value;
+            const conversionFactors = {
+                meter: 1,
+                kilometer: 0.001,
+                centimeter: 100,
+                inch: 39.3701,
+                foot: 3.28084,
+                haat: 2.19,
+                kosh: 0.0003333333333,
+                
+            };
+            const result = (value * conversionFactors[toUnit]) / conversionFactors[fromUnit];
+            document.getElementById('lengthResult').innerText = `Converted Length: ${result} ${toUnit}`;
+        }
+
+        function convertArea() {
+            const value = parseFloat(document.getElementById('areaInput').value);
+            const fromUnit = document.getElementById('areaFrom').value;
+            const toUnit = document.getElementById('areaTo').value;
+            const conversionFactors = {
+                square_meter: 1,
+                square_kilometer: 0.000001,
+                acre: 0.000247105,
+                hectare: 0.0001,
+                square_foot: 10.7639,
+                ropani: 0.0019656501095690285,
+                aana: 0.03145040175310446,
+                paisa: 0.12580528284244974,
+                daam: 0.503221131369799,
+                dhur: 0.05906117969821673,
+                murimato: 0.0147652949245541825,
+                kattha: 0.01494986111111111,
+                bigha: 0.0007474930555555555,
+                
+                
+            };
+            const result = (value * conversionFactors[toUnit]) / conversionFactors[fromUnit];
+            document.getElementById('areaResult').innerText = `Converted Area: ${result} ${toUnit}`;
+        }
+
+        function convertVolume() {
+            const value = parseFloat(document.getElementById('volumeInput').value);
+            const fromUnit = document.getElementById('volumeFrom').value;
+            const toUnit = document.getElementById('volumeTo').value;
+            const conversionFactors = {
+                liter: 1,
+                gallon: 0.264172,
+                cubic_meter: 0.001,
+                milliliter: 1000,
+                mana: 1.76,
+                pathi: 0.22,
+                kuruwa: 0.88,
+                muthi: 17.6,
+                kg: 1,
+            };
+            const result = (value * conversionFactors[toUnit]) / conversionFactors[fromUnit];
+            document.getElementById('volumeResult').innerText = `Converted Volume: ${result} ${toUnit}`;
+        }
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('openBtn').classList.add('hidden'); // Hide open button
+        }
+
+        // Close Sidebar
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('openBtn').classList.remove('hidden'); // Show open button
+        }
+
+        // Show Section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active-section');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active-section');
+        }
+    </script>
+</body>
+</html>

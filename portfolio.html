@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="portfolio.png" type="image/png">
+    <meta name="description" content="About Dinesh">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinesh Panthi - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4b89f0, #f54ea2, #ffb88c);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .container p, .container ul {
+            text-align: left;
+            font-size: 1rem;
+            margin-left: 2rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            white-space:normal;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+        .container ul li a {
+            display: block;
+            max-width: 100%;
+            white-space: normal; /* Ensure the text can wrap */
+        }
+        a {
+            color: #ffdd57;
+            text-decoration: none;
+            font-size:auto;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: -300px;
+            background-color: #2c3e50;
+            color: white;
+            overflow-y: auto;
+            transition: 0.4s ease;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .sidebar-header {
+            padding: 20px;
+            background-color: #34495e;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 1px solid #444;
+            position: relative;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ecf0f1;
+            border-bottom: 1px solid #444;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Open and Close Buttons */
+        .open-sidebar-btn {
+            font-size: 30px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            
+            transition: 0.3s;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 50px; /* Set button width */
+            height: 40px;
+            z-index: 2000;
+        }
+
+        .open-sidebar-btn.hidden {
+            display: none;
+        }
+
+        .close-btn {
+            font-size: 36px;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            
+            border-radius: 50%;
+           
+            transition: 0.3s;
+            position: absolute;
+            top: 15px;
+            width: 50px; /* Set button width */
+            height: 50px;
+            right: 15px;
+        }
+
+        .close-btn:hover {
+            background: transparent;
+            transform: scale(1.1);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
+            }
+
+            .container h2 {
+                font-size: 1.5rem;
+            }
+
+            .container p, .container ul {
+                font-size: 0.9rem;
+                margin-left: 1rem;
+            }
+
+            .open-sidebar-btn {
+                font-size: 28px;
+                padding: 8px;
+            }
+
+            .sidebar {
+                width: 250px;
+            }
+
+            .sidebar a {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .open-sidebar-btn {
+                font-size: 24px;
+                padding: 6px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .sidebar a {
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="sidebar-container"></div>
+
+    <!-- Open Button -->
+    <button class="open-sidebar-btn" id="openBtn" onclick="openSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span>Portfolio</span>
+            <button class="close-btn" onclick="closeSidebar()">×</button>
+        </div>
+        <a href="index.html"><i class="fas fa-home"></i>To-Do's</a>
+        <a href="converter.html"><i class="fas fa-info-circle"></i>Unit Converter</a>
+        <a href="video.html"><i class="fas fa-cogs"></i> Videos</a>
+        <a href="portfolio.html"><i class="portfolio"></i> Portfolio</a>
+        <a href="qrcode.html"><i class="fas fa-envelope"></i> QR-Code Generator</a>
+    </div>
+    
+    <header>
+        <h1>Dinesh Panthi</h1>
+        <p>Welcome to my portfolio! A glimpse into my life and work.</p>
+    </header>
+    <div class="container" id="about">
+        <h2>About Me</h2>
+        <p>Hi, I’m Dinesh Panthi. I live in Bhaktapur, Nepal, and I’m 16 years old. I was born on January 1, 2009, in Gulmi Hadhade. I studied at Arniko Secondary School, Gamcha, Suryabinayak-4, Bhaktapur.</p>
+    </div>
+    <div class="container" id="goals">
+        <h2>Goals</h2>
+        <ul>
+            <li>To make a personal AI assistant.</li>
+            <li>To build a physical body for my AI assistant.</li>
+            <li>To develop every software I use in my life by myself.</li>
+            <li>To create a popular and useful software for all Nepalese.</li>
+        </ul>
+    </div>
+    <div class="container" id="achievements">
+        <h2>Achievements</h2>
+        <ul>
+            <li>Made my own chatbot for personal use.</li>
+            <li>Learned Python programming.</li>
+            <li>Created a ruler for Nepalese unit converters.</li>
+            <li>Developed an English and Nepali date converter, GPA calculator, etc.</li>
+            <li>Built a virtual AI voice and chat assistant to perform virtual tasks like Jarvis.</li>
+        </ul>
+    </div>
+    <div class="container" id="contact">
+        <h2>Contact Information</h2>
+        <ul>
+            <li><strong>Business Email:</strong> <a href="mailto:dpanthi101@gmail.com">dpanthi101@gmail.com</a></li>
+            <li><strong>Personal Email:</strong> <a href="mailto:dpanthi1011@gmail.com">dpanthi1011@gmail.com</a></li>
+        </ul>
+    </div>
+    <div class="container" id="social">
+        <h2>Social Media</h2>
+        <ul>
+            <li><strong>YouTube:</strong> <a href="https://www.youtube.com/@creator-dinesh" target="_blank">Creator Dinesh (CD) </a></li>
+            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/dineshpanthi11" target="_blank">Dinesh Panthi</a></li>
+            <li><strong>Instagram:</strong> <a href="https://www.instagram.com/creator_dinesh_cd" target="_blank">creator_dinesh_cd</a></li>
+        </ul>
+    </div>
+    <footer>
+        &copy; 2025 Dinesh Panthi. All Rights Reserved.
+    </footer>
+    <script>
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('openBtn').classList.add('hidden'); // Hide open button
+        }
+
+        // Close Sidebar
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('openBtn').classList.remove('hidden'); // Show open button
+        }
+
+        // Show Section
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active-section');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active-section');
+        }
+    </script>
+</body>
+</html>
