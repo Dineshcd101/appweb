@@ -9,36 +9,31 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
-            
-            
-            background: linear-gradient(135deg, #4b89f0, #f54ea2, #ffb88c); /* Colorful gradient background */
+            background: linear-gradient(135deg, #4b89f0, #f54ea2, #ffb88c);
             overflow: hidden;
         }
 
-        /* Taskbar at the top */
         #taskbar {
             width: 100%;
             padding: 0;
-            margin-top:0vh;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+            margin-top: 0vh;
+            background-color: rgba(0, 0, 0, 0.7);
             text-align: center;
             color: white;
             position: absolute;
             top: 0;
             display: flex;
-            justify-content: center; /* Center title */
+            justify-content: center;
             align-items: center;
             overflow: hidden;
             height: 7vh;
             z-index: 10;
         }
 
-        /* Title */
         h1 {
             margin: 0;
             font-size: 24px;
@@ -46,19 +41,17 @@
             flex: 1;
         }
 
-        /* Theme Toggle Button */
         #theme-toggle {
             background-color: #3358ff00;
             padding: 1px 1px;
             border-radius: 50%;
             border: none;
-            font-size:32px;
+            font-size: 32px;
             cursor: pointer;
         }
 
-        /* Chat container */
         #chat-container {
-            background-color: rgba(255, 255, 255, 0.1); /* 50% transparent white */
+            background-color: rgba(255, 255, 255, 0.1);
             width: 97%;
             max-width: 97%;
             height: 90vh;
@@ -67,19 +60,16 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            margin-top:7vh;
+            margin-top: 7vh;
             margin-bottom: 5vh;
-            
         }
 
-        /* Output section */
         #output {
             flex: 1;
             padding: 15px;
             overflow-y: auto;
-            background-color: rgba(245, 245, 245, 0.5); /* 50% transparent light grey */
+            background-color: rgba(245, 245, 245, 0.5);
             width: 100%;
-            
             display: flex;
             flex-direction: column;
         }
@@ -91,10 +81,11 @@
             max-width: 75%;
             clear: both;
             word-wrap: break-word;
+            position: relative; /* Make message box relative for absolute positioning of copy button */
         }
 
         .user-message {
-            background-color:  rgba(38, 1, 249, 0.5);
+            background-color: rgba(38, 1, 249, 0.5);
             color: white;
             align-self: flex-end;
             margin-right: 20px;
@@ -102,7 +93,7 @@
         }
 
         .bot-message {
-            background-color:  rgba(255, 2, 2, 0.5);
+            background-color: rgba(255, 2, 2, 0.5);
             color: #ffffff;
             align-self: flex-start;
             margin-right: 20px;
@@ -115,13 +106,10 @@
             line-height: 1.5;
         }
 
-        /* Input section */
         #user-input-container {
             display: flex;
             padding: 3px;
-            background-color: rgba(245, 245, 245, 0.5); /* 50% transparent light grey */
-            
-            
+            background-color: rgba(245, 245, 245, 0.5);
         }
 
         #user-input {
@@ -135,8 +123,8 @@
             background-color: white;
             resize: none;
             overflow-y: hidden;
-            height: 19px; /* Start with 1 line height */
-            max-height: 152px; /* Limit to 4 lines (38px * 4) */
+            height: 19px;
+            max-height: 152px;
         }
 
         #user-input:focus {
@@ -165,13 +153,10 @@
             background-color: #2e6bb0;
         }
 
-        /* Dark theme styles */
         .dark-theme #output {
             background-color: rgba(30, 30, 30, 0.8);
             color: white;
         }
-
-        
 
         .dark-theme #user-input-container {
             background-color: #222;
@@ -184,14 +169,13 @@
             border-color: #666;
         }
 
-        /* Smooth scrolling */
         #output {
             scroll-behavior: smooth;
-            
-        } 
+        }
+
         .copy-button {
             position: absolute;
-            top: 100px;
+            top: 10px;
             right: 10px;
             background-color: rgba(0, 0, 0, 0.3);
             color: white;
@@ -206,6 +190,7 @@
         .message-box:hover .copy-button {
             opacity: 1;
         }
+
         .sidebar {
             height: 100vh;
             width: 300px;
@@ -219,9 +204,11 @@
             box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
+
         .sidebar.open {
             left: 0;
         }
+
         .sidebar-header {
             padding: 20px;
             background-color: #34495e;
@@ -231,6 +218,7 @@
             border-bottom: 1px solid #444;
             position: relative;
         }
+
         .sidebar a {
             display: flex;
             align-items: center;
@@ -253,7 +241,6 @@
             font-size: 20px;
         }
 
-        /* Open and Close Buttons */
         .open-sidebar-btn {
             font-size: 30px;
             background-color: transparent;
@@ -262,12 +249,11 @@
             cursor: pointer;
             padding: 5px;
             border-radius: 50%;
-
             transition: 0.3s;
             position: fixed;
             top: 0px;
-            left:0px;
-            width: 50px; /* Set button width */
+            left: 0px;
+            width: 50px;
             height: 40px;
             z-index: 2000;
         }
@@ -283,13 +269,11 @@
             border: none;
             cursor: pointer;
             padding: 8px;
-            
             border-radius: 50%;
-           
             transition: 0.3s;
             position: absolute;
             top: 10px;
-            width: 50px; /* Set button width */
+            width: 50px;
             height: 50px;
             right: 15px;
         }
@@ -298,13 +282,10 @@
             background-color: transparent;
             transform: scale(1.1);
         }
-
     </style>
 </head>
 <body>
     <div id="sidebar-container"></div>
-
-    <!-- Open Button -->
     <button class="open-sidebar-btn" id="openBtn" onclick="openSidebar()">☰</button>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -333,7 +314,7 @@
     <script>
         function generateUUID() {
             const randomPart = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-            return `${randomPart()}${randomPart()}-${randomPart()}-${randomPart()}-${randomPart()}-${randomPart()}${randomPart()}${randomPart()}`;
+            return `${randomPart()}${randomPart()}-${randomPart()}-${randomPart()}-${randomPart()}${randomPart()}${randomPart()}${randomPart()}`;
         }
 
         function setCookie(name, value, days) {
@@ -346,9 +327,10 @@
             const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
         }
-        function createMessageBox(content, isUser ) {
+
+        function createMessageBox(content, isUser) {
             const messageBox = document.createElement('div');
-            messageBox.className = `message-box ${isUser  ? 'user-message' : 'bot-message'}`;
+            messageBox.className = `message-box ${isUser ? 'user-message' : 'bot-message'}`;
             messageBox.innerHTML = `<p>${content}</p>`;
 
             // Create the copy button
@@ -358,22 +340,20 @@
             copyButton.onclick = function () {
                 copyToClipboard(content);
             };
-
             messageBox.appendChild(copyButton);
             return messageBox;
         }
+
         function openSidebar() {
             document.getElementById('sidebar').classList.add('open');
-            document.getElementById('openBtn').classList.add('hidden'); // Hide open button
+            document.getElementById('openBtn').classList.add('hidden');
         }
 
-        // Close Sidebar
         function closeSidebar() {
             document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('openBtn').classList.remove('hidden'); // Show open button
+            document.getElementById('openBtn').classList.remove('hidden');
         }
 
-        // Show Section
         function showSection(sectionId) {
             const sections = document.querySelectorAll('section');
             sections.forEach(section => {
@@ -382,13 +362,14 @@
             const targetSection = document.getElementById(sectionId);
             if (targetSection) targetSection.classList.add('active-section');
         }
+
         async function chatWithDot(userMessage) {
             const url = "https://playground.julius.ai/api/chat/message";
             let cookie = getCookie("conversation-id");
-            let ast = ""
+            let ast = "";
             if (!cookie) {
                 cookie = generateUUID();
-                setCookie("conversation-id", cookie, 7); // Set cookie for 7 days
+                setCookie("conversation-id", cookie, 7);
             }
 
             const headers = {
@@ -419,29 +400,26 @@
 
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder("utf-8");
-                let responseText = ""; // Initialize empty string to accumulate response
+                let responseText = "";
 
                 const outputDiv = document.getElementById('output');
-
-                // Create a message box for the bot's response
                 const messageBox = createMessageBox('', false);
                 outputDiv.appendChild(messageBox);
 
-                // Stream the content
                 while (true) {
                     const { done, value } = await reader.read();
-                    if (done) break; // Exit the loop if the stream is done
+                    if (done) break;
                     const chunk = decoder.decode(value, { stream: true });
-                    const jsonObjects = chunk.match(/({.*?})/g); // Extract JSON objects
+                    const jsonObjects = chunk.match(/({.*?})/g);
 
                     if (jsonObjects) {
-                         jsonObjects.forEach(jsonString => {
+                        jsonObjects.forEach(jsonString => {
                             try {
-                                const apiResponse = JSON.parse(jsonString); // Parse each JSON object
+                                const apiResponse = JSON.parse(jsonString);
                                 if (apiResponse.content) {
                                     ast += apiResponse.content;
-                                    messageBox.innerHTML += apiResponse.content; // Append content in a single line
-                                }else if (apiResponse.new_message_id) {
+                                    messageBox.querySelector('p').textContent += apiResponse.content;
+                                } else if (apiResponse.new_message_id) {
                                     setCookie("new_message_id", apiResponse.new_message_id, 7);
                                     console.log("New message ID set as a cookie:", apiResponse.new_message_id);
                                 }
@@ -452,14 +430,14 @@
                     }
                 }
                 history += "\nAssistant: " + ast;
-                console.log(history)
-                // Scroll the output to the bottom
+                console.log(history);
                 outputDiv.scrollTop = outputDiv.scrollHeight;
 
             } catch (error) {
                 console.error("Error in fetching response:", error);
             }
         }
+
         function copyToClipboard(text) {
             const tempInput = document.createElement('textarea');
             document.body.appendChild(tempInput);
@@ -469,15 +447,8 @@
             document.body.removeChild(tempInput);
             alert('Copied to clipboard!');
         }
-      
-        const copyButton = document.createElement('button');
-        copyButton.classList.add('copy-button');
-        copyButton.textContent = 'Copy';
-        copyButton.onclick = function () {
-            copyToClipboard(message);
-        };
+
         let history = "";
-        // Handle text input size and Shift+Enter for a new line
         document.addEventListener("DOMContentLoaded", () => {
             const inputField = document.getElementById("user-input");
             const sendButton = document.getElementById("send-button");
@@ -486,49 +457,41 @@
             sendButton.addEventListener("click", async () => {
                 const userInput = inputField.value.trim();
                 if (userInput) {
-                    const userMessageBox = document.createElement('div');
-                    userMessageBox.className = 'message-box user-message';
-                    userMessageBox.innerHTML = `<p>${userInput}</p>`;
+                    const userMessageBox = createMessageBox(userInput, true);
                     document.getElementById('output').appendChild(userMessageBox);
-                    inputField.value = ''; // Clear the input field
+                    inputField.value = '';
                     history += "\nUser: " + userInput;
                     console.log(history);
-                    await chatWithDot( " (I Prefer Very Short And Precise Response. I am Dinesh Sir! You Should Call Me Dinesh Sir In Every Response. Your Name is DOT(Dinesh's Only Textbot)" + "\n here is the history of the chat:\n" + history);
-                    //history += "\nUser: " + userInput;
-                    //console.log(history)
+                    await chatWithDot(" (I Prefer Very Short And Precise Response. I am Dinesh Sir! You Should Call Me Dinesh Sir In Every Response. Your Name is DOT(Dinesh's Only Textbot)" + "\n here is the history of the chat:\n" + history);
                 }
             });
 
-            // Event listener for pressing Enter key
             inputField.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter' && event.shiftKey) {
-                    // Allow new line on Shift + Enter
                     event.preventDefault();
-                    inputField.value += '\n'; // Insert newline
+                    inputField.value += '\n';
                 } else if (event.key === 'Enter') {
                     inputField.style.height = '20px';
-                    sendButton.click(); // Trigger send button
+                    sendButton.click();
                 }
             });
 
-            // Event listener for theme toggle
             themeToggleButton.addEventListener('click', () => {
                 document.body.classList.toggle('dark-theme');
             });
 
-            // Automatically resize the input box based on content, but limit to 4 lines
             inputField.addEventListener('input', () => {
                 inputField.style.height = 'auto';
                 const lines = inputField.value.split('\n').length;
-                const lineHeight = 20; // Approximate height per line
-                const maxHeight = 4 * lineHeight; // Max height for 4 lines
-                const minHeight = lineHeight; // Min height for 1 line
+                const lineHeight = 20;
+                const maxHeight = 4 * lineHeight;
+                const minHeight = lineHeight;
 
-                const height = Math.min(lines * lineHeight, maxHeight); // Calculate height based on content
-                inputField.style.height = `${Math.max(height, minHeight)}px`; // Set height, ensuring it doesn't go below minHeight
+                const height = Math.min(lines * lineHeight, maxHeight);
+                inputField.style.height = `${height}px`;
             });
         });
     </script>
 </body>
 </html>
- 
+
